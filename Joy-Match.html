@@ -349,9 +349,9 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 4px 2px;
+            padding: 6px 4px;
             background: rgba(0,0,0,0.1);
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 4px;
         }
         
@@ -359,22 +359,43 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             cursor: grab;
             position: relative;
             transition: transform 0.15s;
-            padding: 6px 8px;
-            border-radius: 8px;
-            min-width: 55px;
-            min-height: 55px;
-            background: rgba(255,255,255,0.05);
+            padding: 12px 14px;
+            border-radius: 12px;
+            min-width: 70px;
+            min-height: 70px;
+            background: rgba(255,255,255,0.1);
+            touch-action: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        /* Görünmez touch overlay - tüm alanı kaplar */
+        .perk-item::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            z-index: 5;
+        }
+        
+        /* Child elementler tıklanamaz - event parent'a gider */
+        .perk-item > * {
+            pointer-events: none;
         }
         
         .perk-item:active { transform: scale(0.95); }
         .perk-item.dragging { opacity: 0.5; transform: scale(0.9); }
         
         .perk-icon {
-            width: 38px;
-            height: 38px;
+            width: 42px;
+            height: 42px;
             object-fit: contain;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
             transition: transform 0.15s, filter 0.15s;
@@ -1476,15 +1497,22 @@
             }
         });
         
-        // Event delegation ile drag - tüm perk alanında çalışır
-        document.querySelector('.perks-bar').addEventListener('mousedown', (e) => {
-            const item = e.target.closest('.perk-item');
-            if (item) startPerkDrag(e, item);
+        // Doğrudan her perk-item'a event listener
+        document.querySelectorAll('.perk-item').forEach(item => {
+            // Mouse events
+            item.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                startPerkDrag(e, item);
+            });
+            
+            // Touch events - mobil için kritik
+            item.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                startPerkDrag(e, item);
+            }, { passive: false });
         });
-        document.querySelector('.perks-bar').addEventListener('touchstart', (e) => {
-            const item = e.target.closest('.perk-item');
-            if (item) startPerkDrag(e, item);
-        }, { passive: false });
         
         function showToast(msg, color) {
             toast.innerHTML = msg;
