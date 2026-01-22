@@ -26,7 +26,7 @@
             flex-direction: column;
             align-items: center; 
             justify-content: flex-start;
-            padding-top: 15px;
+            padding-top: 10px;
             position: relative;
             overflow: hidden;
         }
@@ -34,7 +34,7 @@
         .menu-screen {
             display: flex; flex-direction: column;
             align-items: center; justify-content: flex-start;
-            gap: 20px; width: 100%; padding: 10px 20px;
+            gap: 15px; width: 100%; padding: 10px 20px;
         }
         
         .logo {
@@ -49,27 +49,35 @@
         }
         
         .play-btn {
-            width: 65%; max-width: 250px; cursor: pointer;
+            width: 55%; max-width: 200px; cursor: pointer;
             filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
             animation: pulse 2s ease-in-out infinite;
             transition: transform 0.15s;
+            margin-bottom: 5px;
         }
         
         .play-btn:active { transform: scale(0.92); }
         
         .tutorial-btn {
-            margin-top: 5px;
-            width: 55%;
-            max-width: 200px;
+            margin-top: 0;
+            width: 38%;
+            max-width: 140px;
             cursor: pointer;
             transition: transform 0.2s;
             filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+            animation: tutorialFloat 3s ease-in-out infinite;
         }
         .tutorial-btn:hover { transform: scale(1.05); }
+        .tutorial-btn:active { transform: scale(0.92); }
         
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
+        }
+        
+        @keyframes tutorialFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
         
         .game-screen {
@@ -78,8 +86,8 @@
             height: 100%;
             flex-direction: column; 
             align-items: center;
-            padding: 8px;
-            padding-top: 10px;
+            padding: 5px;
+            padding-top: 0;
         }
         
         .game-header {
@@ -91,7 +99,7 @@
             background: rgba(0,0,0,0.25);
             backdrop-filter: blur(10px);
             border-radius: 12px;
-            margin-bottom: 6px;
+            margin-bottom: 3px;
         }
         
         .header-top {
@@ -414,16 +422,16 @@
             justify-content: center; 
             width: 100%;
             position: relative;
-            padding-top: 5px;
+            padding-top: 0;
         }
         
         .game-board {
             display: grid;
-            grid-template-columns: repeat(8, 42px);
-            grid-template-rows: repeat(10, 42px);
-            gap: 3px;
+            grid-template-columns: repeat(8, 44px);
+            grid-template-rows: repeat(10, 44px);
+            gap: 2px;
             background: rgba(0,0,0,0.4);
-            padding: 8px; 
+            padding: 6px; 
             border-radius: 14px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.4);
             border: 3px solid rgba(255,255,255,0.2);
@@ -437,8 +445,8 @@
         }
         
         .cell {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             border-radius: 6px;
             background: rgba(255,255,255,0.1);
             display: flex; 
@@ -453,9 +461,11 @@
         }
         
         .stone {
-            width: 40px; 
-            height: 40px;
+            width: 42px; 
+            height: 42px;
             object-fit: contain;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
             cursor: grab;
             transition: transform 0.15s, filter 0.15s;
             user-select: none;
